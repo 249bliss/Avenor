@@ -1,0 +1,408 @@
+/* =============================================
+   SECTION 3 — Property Collection
+   ============================================= */
+
+.section {
+  padding: 120px 0 80px;
+  background-color: #fff;
+  overflow: hidden; /* prevent page-level horizontal scroll */
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 0 64px;
+  margin-bottom: 56px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  flex: 0 0 auto;
+}
+
+.heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: #8a8579;
+}
+
+.subheading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #8a8a8a;
+  max-width: 280px;
+  text-align: right;
+}
+
+/* ── Track outer — clips overflow ── */
+.trackOuter {
+  overflow: hidden;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ── Scrollable track (Framer Motion) ── */
+.track {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  cursor: grab;
+  padding: 0 64px 40px;
+}
+
+.track:active {
+  cursor: grabbing;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Individual slide wrapper ── */
+.slide {
+  flex: 0 0 auto;
+  width: 680px;
+}
+
+/* ── Card ── */
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: opacity 0.4s ease;
+  opacity: 1; /* Inactive cards are fully visible in Figma */
+}
+
+.cardActive {
+  opacity: 1;
+}
+
+/* ── Image area (the main container) ── */
+.imageArea {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Full-size image frame — for AnimatePresence crossfade */
+.imageFrame {
+  position: absolute;
+  inset: 0;
+}
+
+.cardImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── Top overlay row ── */
+.cardTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 16px 0;
+  z-index: 10;
+}
+
+/* Location badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 100px;
+  padding: 6px 8px 6px 16px;
+}
+
+.badgeText {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.badgeIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  color: var(--color-green);
+}
+
+/* ── Thumbnail switcher (top right) ── */
+.thumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.thumb {
+  position: relative;
+  width: 120px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.thumb:hover, .thumbActive {
+  border-color: #fff;
+}
+
+.thumbImage {
+  object-fit: cover;
+}
+
+/* ── Bottom overlay ── */
+.cardBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 5, 0.85) 0%,
+    rgba(5, 5, 5, 0.4) 50%,
+    transparent 100%
+  );
+  padding: 64px 20px 24px;
+  z-index: 10;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardName {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.cardPrice {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* Invisible hit area overlaying the image for tap-to-switch */
+.imageToggleHitArea {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 5; /* below top/bottom overlays but above image */
+}
+
+/* ── Navigation (dots + arrows) ── */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.arrowBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #d0d0d0;
+  background: transparent;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arrowBtn:hover:not(:disabled) {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dotActive {
+  background: var(--color-green);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1200px) {
+  .header {
+    padding: 0 48px;
+  }
+
+  .track {
+    padding: 0 48px 0 80px;
+  }
+
+  .slide {
+    width: 580px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 80px 0 64px;
+  }
+
+  .header {
+    padding: 0 40px;
+    margin-bottom: 40px;
+  }
+
+  .track {
+    padding: 0 40px 0 60px;
+    gap: 16px;
+  }
+
+  .slide {
+    width: 520px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0 56px;
+  }
+
+  .header {
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .subheading {
+    text-align: left;
+  }
+
+  .track {
+    padding: 0 24px;
+    gap: 14px;
+  }
+
+  .slide {
+    width: 85vw;
+    max-width: 480px;
+  }
+
+  /* disable scale effect on mobile */
+  .card {
+    opacity: 1;
+  }
+
+  .cardActive {
+    opacity: 1;
+  }
+
+  .dots {
+    margin-top: 28px;
+    padding: 0 24px;
+  }
+  
+  .thumb {
+    width: 76px;
+    height: 52px;
+  }
+  
+  .thumbs {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide {
+    width: 82vw;
+  }
+
+  .thumb {
+    width: 58px;
+    height: 40px;
+  }
+  
+  .badge {
+    padding: 4px 6px 4px 10px;
+  }
+  
+  .badgeText {
+    font-size: 11px;
+  }
+  
+  .badgeIconWrapper {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .cardTop {
+    padding: 12px 12px 0;
+  }
+
+  .cardName {
+    font-size: 16px;
+  }
+
+  .cardPrice {
+    font-size: 19px;
+  }
+}

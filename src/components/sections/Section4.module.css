@@ -1,0 +1,243 @@
+/* =============================================
+   SECTION 4 — Luxury That Appreciates
+   ============================================= */
+
+.section {
+  padding: 60px 64px 120px; /* space between sections */
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+}
+
+/* ── Main Image Frame ── */
+.imageFrame {
+  position: relative;
+  width: 100%;
+  height: 640px;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* ── Text Content ── */
+.textContent {
+  position: absolute;
+  top: 45%;
+  left: 64px;
+  transform: translateY(-50%);
+  z-index: 10;
+  max-width: 800px;
+}
+
+.heading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: clamp(36px, 4.5vw, 52px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  white-space: nowrap;
+}
+
+.subheading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 480px;
+}
+
+/* ── Statistics Cutout ── */
+.statsContainer {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  background-color: #ffffff;
+  padding: 40px 140px 40px 64px;
+  border-top-right-radius: 48px;
+  z-index: 20;
+}
+
+/* Inverse curve pseudo-element connecting right edge of stats to the image */
+.statsContainer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  width: 48px;
+  height: 48px;
+  background-color: transparent;
+  border-bottom-left-radius: 48px;
+  box-shadow: -24px 24px 0 24px #ffffff;
+  pointer-events: none;
+}
+
+.statsInner {
+  display: flex;
+  gap: 64px;
+  align-items: flex-start;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 130px; /* Prevents container from collapsing/expanding during animation */
+}
+
+.statValue {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: #002C15;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #6b6b6b;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1200px) {
+  .section {
+    padding: 40px 48px 100px;
+  }
+  
+  .imageFrame {
+    height: 580px;
+  }
+
+  .textContent {
+    left: 64px;
+  }
+
+  .statsContainer {
+    padding: 40px 64px 40px 16px;
+  }
+
+  .statsInner {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .imageFrame {
+    height: 520px;
+  }
+
+  .statsContainer {
+    padding: 32px 48px 32px 0;
+  }
+
+  .statsInner {
+    gap: 32px;
+  }
+}
+
+/* Tablet / Mobile portrait */
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 24px 80px;
+  }
+
+  .imageFrame {
+    height: 540px; /* Taller to fit overlapping content */
+  }
+
+  .textContent {
+    top: 35%;
+    left: 40px;
+    right: 40px;
+    transform: translateY(-50%);
+    max-width: none;
+  }
+  
+  .heading {
+    white-space: normal;
+  }
+  
+
+  .desktopBreak {
+    display: none;
+  }
+
+  .statsContainer {
+    padding: 32px 80px 32px 40px;
+    border-top-right-radius: 40px;
+  }
+
+  .statsContainer::after {
+    width: 32px;
+    height: 32px;
+    border-bottom-left-radius: 32px;
+    box-shadow: -16px 16px 0 16px #ffffff;
+  }
+
+  .statsInner {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageFrame {
+    height: 500px;
+    border-radius: 16px;
+  }
+
+  .textContent {
+    top: 30%;
+    left: 24px;
+    right: 24px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .statsContainer {
+    padding: 24px 48px 24px 24px;
+    border-top-right-radius: 32px;
+  }
+
+  .statsContainer::after {
+    width: 24px;
+    height: 24px;
+    border-bottom-left-radius: 24px;
+    box-shadow: -12px 12px 0 12px #ffffff;
+  }
+
+  .statsInner {
+    gap: 16px 32px;
+    flex-wrap: wrap;
+  }
+
+  .statValue {
+    font-size: 32px;
+  }
+  
+  .statItem {
+    min-width: 90px;
+  }
+}

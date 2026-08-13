@@ -1,0 +1,359 @@
+/* =============================================
+   SECTION 7 — FOOTER
+   ============================================= */
+
+.footer {
+  padding: 0 64px 64px;
+  background-color: #ffffff; /* Match page background */
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  min-height: 800px;
+}
+
+/* ── Background Image ── */
+.backgroundWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Layer 2: Dark Vertical Gradient Overlay */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(22, 22, 22, 0.2) 0%,
+    rgba(22, 22, 22, 0.5) 40%,
+    rgba(22, 22, 22, 0.8) 70%,
+    rgba(22, 22, 22, 0.95) 100%
+  );
+  z-index: 1;
+}
+
+/* Layer 3: Large AVENOR Wordmark */
+.wordmarkContainer {
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  margin-top: auto;
+  /* Solid at the top, fading to transparent at the bottom */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.wordmarkText {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: clamp(100px, 19.5vw, 320px);
+  font-weight: 500;
+  line-height: 0.75;
+  margin: 0;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  
+  /* Solid white text, pushed down so the under is masked by the footer */
+  color: #ffffff;
+  transform: translateY(22%);
+}
+
+/* Layer 4: Main Content */
+.content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 100px 80px 40px;
+}
+
+/* ── Top Section (CTA) ── */
+.topSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 24px;
+}
+
+.heading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.subheading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* CTA Button */
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  background-color: #ffffff;
+  border-radius: 100px;
+  padding: 6px 6px 6px 20px;
+  border: none;
+  cursor: pointer;
+  gap: 12px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.ctaText {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.ctaIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #002C15;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Bottom Section (Links & Legal) ── */
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  z-index: 4; /* Keep above wordmark */
+  margin-top: auto;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 320px;
+}
+
+.logoWrapper {
+  position: relative;
+}
+
+.logo {
+  object-fit: contain;
+  /* Logo color is assumed to be white inside the image asset */
+}
+
+.brandDesc {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #a3a3a3;
+  line-height: 1.6;
+}
+
+.socials {
+  display: flex;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.socials a {
+  color: #ffffff;
+  transition: opacity 0.2s ease;
+}
+
+.socials a:hover {
+  opacity: 0.7;
+}
+
+.navCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: right;
+}
+
+.navHeading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.navList li a {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #a3a3a3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navList li a:hover {
+  color: #ffffff;
+}
+
+/* Legal Row */
+.legalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #a3a3a3;
+  padding-top: 16px;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.legalLinks a {
+  color: #a3a3a3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.legalLinks a:hover {
+  color: #ffffff;
+}
+
+.divider {
+  opacity: 0.5;
+}
+
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1200px) {
+  .footer {
+    padding: 0 48px 48px;
+  }
+  .content {
+    padding: 64px 64px 40px;
+  }
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+  }
+  .navCol {
+    text-align: left;
+  }
+  .navList {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 0 24px 24px;
+  }
+  .container {
+    border-radius: 16px;
+  }
+  .content {
+    padding: 48px 32px 32px;
+    gap: 48px;
+  }
+  .heading {
+    white-space: normal;
+    font-size: 32px;
+  }
+  .topSection {
+    gap: 16px;
+  }
+  .navList {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .bottomSection {
+    gap: 40px;
+  }
+  .legalRow {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 64px 24px 0;
+  }
+  .ctaBtn {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .infoRow {
+    gap: 40px;
+  }
+  .navList {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .legalLinks {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .divider {
+    display: none;
+  }
+}

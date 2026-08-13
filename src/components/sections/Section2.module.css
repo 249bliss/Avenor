@@ -1,0 +1,283 @@
+/* =============================================
+   SECTION 2 — Every home is chosen with intention
+   ============================================= */
+
+.section {
+  padding: 120px 64px;
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+/* Two-column asymmetric layout */
+.inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ── Left column ── */
+.content {
+  flex: 0 0 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* heading top, paragraph bottom */
+  min-height: 340px;
+  gap: 0;
+  padding-top: 8px;
+}
+
+.heading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: clamp(32px, 3.5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+}
+
+/* "with intention" is italic AND lighter gray — per Figma */
+.heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: #8a8579;
+}
+
+/* Bullet + paragraph row */
+.bodyRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bullet {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.subheading {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #6b6b6b;
+}
+
+.rightCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Overflow wrapper — clips the track */
+.trackWrapper {
+  overflow: hidden;
+}
+
+/* Scrollable track */
+.track {
+  display: flex;
+  gap: 16px;
+  cursor: grab;
+  /* let last card peek to hint scrollability */
+  padding-right: 48px;
+}
+
+.track:active {
+  cursor: grabbing;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Card — image fills entirely, text overlaid ── */
+.card {
+  position: relative;
+  flex: 0 0 calc(50% - 8px);
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #d8d3cc;
+}
+
+.cardImage {
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.04);
+}
+
+/* Dark gradient + text pinned to bottom of card */
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.80) 0%,
+    rgba(10, 10, 10, 0.30) 45%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 20px;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.cardText {
+  font-family: var(--font-metropolis), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+/* ── Arrows ── */
+.arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.arrowBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #d0d0d0;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.arrowBtn:hover {
+  border-color: #1a1a1a;
+}
+
+/* Active (right) arrow — filled dark */
+.arrowBtnActive {
+  background-color: #002C15;
+  border-color: #002C15;
+  color: #fff;
+}
+
+.arrowBtnActive:hover {
+  background-color: #004020;
+  border-color: #004020;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1200px) {
+  .section {
+    padding: 100px 48px;
+  }
+
+  .inner {
+    gap: 56px;
+  }
+
+  .content {
+    flex: 0 0 280px;
+  }
+
+  .card {
+    flex: 0 0 270px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 80px 40px;
+  }
+
+  .inner {
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .content {
+    flex: none;
+    max-width: 600px;
+    min-height: auto;
+    gap: 40px; /* restore stacked gap on tablet */
+  }
+
+  .card {
+    flex: 0 0 260px;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 24px;
+  }
+
+  .inner {
+    gap: 28px;
+  }
+
+  /* On mobile: disable space-between — paragraph sits directly below heading */
+  .content {
+    min-height: auto;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  /* Tighten the heading → paragraph gap on mobile */
+  .bodyRow {
+    margin-top: 24px;
+  }
+
+  .track {
+    padding-right: 24px;
+    gap: 12px;
+  }
+
+  .card {
+    flex: 0 0 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 56px 20px;
+  }
+
+  .bodyRow {
+    margin-top: 20px;
+  }
+
+  .card {
+    flex: 0 0 210px;
+  }
+}
+
