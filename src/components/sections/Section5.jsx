@@ -82,20 +82,14 @@ export default function Section5() {
         {/* ── Main Content Area ── */}
         <motion.div 
           className={styles.content}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
+          transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
         >
           
           {/* 1. Images Column */}
-          <motion.div 
-            className={styles.imagesCol}
-            variants={{
-              hidden: { opacity: 0, y: 30, scale: 0.95 },
-              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
-            }}
-          >
+          <div className={styles.imagesCol}>
             {testimonials.map((testi, i) => {
               const isActive = i === activeIndex;
               return (
@@ -112,20 +106,15 @@ export default function Section5() {
                     fill
                     sizes="(max-width: 768px) 120px, 180px"
                     className={styles.image}
+                    unoptimized
                   />
                 </button>
               );
             })}
-          </motion.div>
+          </div>
 
           {/* 2. Controls Column */}
-          <motion.div 
-            className={styles.controlsCol}
-            variants={{
-              hidden: { opacity: 0, y: 30, scale: 0.95 },
-              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
-            }}
-          >
+          <div className={styles.controlsCol}>
             <button 
               className={`${styles.arrowBtn} ${activeIndex === 0 ? styles.arrowDisabled : ''}`} 
               onClick={handlePrev}
@@ -146,16 +135,10 @@ export default function Section5() {
                 <path d="M12 5v14M19 12l-7 7-7-7"/>
               </svg>
             </button>
-          </motion.div>
+          </div>
 
           {/* 3. Quote Card Column */}
-          <motion.div 
-            className={styles.quoteCol}
-            variants={{
-              hidden: { opacity: 0, x: 30, scale: 0.95 },
-              visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
-            }}
-          >
+          <div className={styles.quoteCol}>
             <div className={styles.quoteCard}>
               
               {/* Quote Icon */}
@@ -184,7 +167,7 @@ export default function Section5() {
               </AnimatePresence>
 
             </div>
-          </motion.div>
+          </div>
 
         </motion.div>
 
