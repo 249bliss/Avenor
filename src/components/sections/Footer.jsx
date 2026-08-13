@@ -4,9 +4,21 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+  const lenis = useLenis();
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -80 }); // Match navbar offset
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className={styles.footer} id="footer">
       <div className={styles.container}>
@@ -101,11 +113,11 @@ export default function Footer() {
               <div className={styles.navCol}>
                 <h4 className={styles.navHeading}>Navigations</h4>
                 <ul className={styles.navList}>
-                  <li><Link href="#story">Our Story</Link></li>
-                  <li><Link href="#properties">Properties</Link></li>
-                  <li><Link href="#investment">Investment</Link></li>
-                  <li><Link href="#testimonials">Testimonials</Link></li>
-                  <li><Link href="#faq">FAQ</Link></li>
+                  <li><a href="#story" onClick={(e) => handleLinkClick(e, '#story')}>Our Story</a></li>
+                  <li><a href="#properties" onClick={(e) => handleLinkClick(e, '#properties')}>Properties</a></li>
+                  <li><a href="#investment" onClick={(e) => handleLinkClick(e, '#investment')}>Investment</a></li>
+                  <li><a href="#testimonials" onClick={(e) => handleLinkClick(e, '#testimonials')}>Testimonials</a></li>
+                  <li><a href="#faq" onClick={(e) => handleLinkClick(e, '#faq')}>FAQ</a></li>
                 </ul>
               </div>
             </div>
