@@ -153,8 +153,8 @@ export default function Section5() {
                   key={activeIndex}
                   initial={{ opacity: 0, [isMobile ? 'x' : 'y']: direction === 1 ? 20 : direction === -1 ? -20 : 0 }}
                   animate={{ opacity: 1, [isMobile ? 'x' : 'y']: 0 }}
-                  exit={{ opacity: 0, [isMobile ? 'x' : 'y']: direction === 1 ? -20 : direction === -1 ? 20 : 0 }}
-                  transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
+                  exit={{ opacity: 0, [isMobile ? 'x' : 'y']: direction === 1 ? -10 : direction === -1 ? 10 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                   className={styles.quoteContentInner}
                 >
                   <p className={styles.quoteText}>{activeTestimonial.quote}</p>

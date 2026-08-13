@@ -146,6 +146,7 @@ export default function Section2() {
                     draggable={false}
                     sizes="(max-width: 768px) 260px, (max-width: 1024px) 290px, 320px"
                     className={styles.cardImage}
+                    unoptimized
                   />
                   <div className={styles.cardOverlay}>
                     <h3 className={styles.cardTitle}>{card.title}</h3>
