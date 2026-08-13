@@ -14,9 +14,9 @@ export default function Hero() {
     visible: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.3, 
-        delayChildren: 0.5,
-        duration: 0.8, 
+        staggerChildren: 0.1, 
+        delayChildren: 0.1,
+        duration: 0.5, 
         ease: "easeOut"
       }
     }
@@ -27,7 +27,7 @@ export default function Hero() {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
