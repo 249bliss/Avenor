@@ -146,7 +146,7 @@ function PropertyCard({ property, index, isActive }) {
 export default function Section3() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
-    containScroll: 'trimSnaps', // Strict boundaries (no empty space)
+    containScroll: 'keepSnaps', // Keeps 1:1 ratio between properties and snap points without empty space
     dragFree: false, // Forces snap scrolling
   });
 
@@ -156,7 +156,10 @@ export default function Section3() {
   React.useEffect(() => {
     if (!emblaApi) return;
     const onSelect = () => setActiveIndex(emblaApi.selectedScrollSnap());
+    
+    // Update on select (snap end) and also during scroll for responsive feedback
     emblaApi.on('select', onSelect);
+    emblaApi.on('scroll', onSelect);
     onSelect(); // Trigger immediately to sync initial state
   }, [emblaApi]);
 
