@@ -59,13 +59,15 @@
   position: relative;
   display: flex;
   gap: 20px;
-  cursor: grab;
   padding: 0 64px 40px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-left: 64px;
+  -webkit-overflow-scrolling: touch;
 }
 
-.track:active {
-  cursor: grabbing;
-}
+
 
 .track::-webkit-scrollbar {
   display: none;
@@ -75,6 +77,7 @@
 .slide {
   flex: 0 0 auto;
   width: 680px;
+  scroll-snap-align: start;
 }
 
 /* ── Card ── */
@@ -293,7 +296,8 @@
   }
 
   .track {
-    padding: 0 48px 0 80px;
+    padding: 0 48px 40px 80px;
+    scroll-padding-left: 80px;
   }
 
   .slide {
@@ -312,8 +316,9 @@
   }
 
   .track {
-    padding: 0 40px 0 60px;
+    padding: 0 40px 40px 60px;
     gap: 16px;
+    scroll-padding-left: 60px;
   }
 
   .slide {
@@ -338,8 +343,9 @@
   }
 
   .track {
-    padding: 0 24px;
+    padding: 0 24px 40px 24px;
     gap: 14px;
+    scroll-padding-left: 24px;
   }
 
   .slide {

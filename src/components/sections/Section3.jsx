@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useMotionValue, animate, useMotionValueEvent } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import TextReveal from '../ui/TextReveal';
 import styles from './Section3.module.css';
 
@@ -145,62 +145,22 @@ function PropertyCard({ property, index, isActive }) {
 export default function Section3() {
   const trackRef = useRef(null);
   const wrapperRef = useRef(null);
-  const [sliderConstraints, setSliderConstraints] = useState({ left: 0, right: 0 });
-  const [activeIndex, setActiveIndex] = useState(1); // centre card active by default
-  const x = useMotionValue(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // Center on mount without animation and calculate constraints
-  React.useEffect(() => {
-    const measure = () => {
-      if (trackRef.current && wrapperRef.current) {
-        const wrapperWidth = wrapperRef.current.offsetWidth;
-        const cards = trackRef.current.querySelectorAll('[data-card]');
-        
-        if (cards.length > 0) {
-          const trackWidth = trackRef.current.scrollWidth;
-          
-          // Max X (scrolled all the way left) should be exactly 0 so it aligns with padding
-          const maxX = 0;
-          // Min X (scrolled all the way right) aligns track's right edge with wrapper's right edge
-          const minX = Math.min(0, wrapperWidth - trackWidth);
-          
-          setSliderConstraints({ left: minX, right: maxX });
-
-          // Set initial active card
-          if (cards[activeIndex]) {
-            const trackCenter = wrapperWidth / 2;
-            const activeCard = cards[activeIndex];
-            let initialX = trackCenter - (activeCard.offsetLeft + activeCard.offsetWidth / 2);
-            initialX = Math.max(minX, Math.min(maxX, initialX));
-            x.set(initialX);
-          }
-        }
-      }
-    };
-    measure();
-    const timeout = setTimeout(measure, 100);
-    window.addEventListener('resize', measure);
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener('resize', measure);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // ── Sync active dot during free drag ────────────────────────
-  useMotionValueEvent(x, "change", (latest) => {
-    if (!wrapperRef.current || !trackRef.current) return;
-    const trackCenter = wrapperRef.current.offsetWidth / 2;
-    const targetPoint = trackCenter - latest;
-    
-    const cards = Array.from(trackRef.current.querySelectorAll('[data-card]'));
+  // ── Sync active dot during native scroll ────────────────────────
+  const handleScroll = () => {
+    if (!trackRef.current) return;
+    const track = trackRef.current;
+    const scrollLeft = track.scrollLeft;
+    const cards = track.querySelectorAll('[data-card]');
+    const paddingLeft = parseInt(window.getComputedStyle(track).paddingLeft) || 0;
     
     let closestIndex = 0;
     let minDistance = Infinity;
     
     cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(targetPoint - cardCenter);
+      const targetScroll = card.offsetLeft - paddingLeft;
+      const distance = Math.abs(scrollLeft - targetScroll);
       if (distance < minDistance) {
         minDistance = distance;
         closestIndex = index;
@@ -210,21 +170,20 @@ export default function Section3() {
     if (closestIndex !== activeIndex) {
       setActiveIndex(closestIndex);
     }
-  });
+  };
 
   // ── Dot navigation ────────────────────────────────
   const scrollToCard = (index) => {
     setActiveIndex(index);
-    if (!trackRef.current || !wrapperRef.current) return;
+    if (!trackRef.current) return;
     const cards = trackRef.current.querySelectorAll('[data-card]');
     if (cards[index]) {
-      const trackCenter = wrapperRef.current.offsetWidth / 2;
-      const card = cards[index];
-      
-      let targetX = trackCenter - (card.offsetLeft + card.offsetWidth / 2);
-      targetX = Math.max(sliderConstraints.left, Math.min(sliderConstraints.right, targetX));
-      
-      animate(x, targetX, { type: 'spring', stiffness: 200, damping: 25 });
+      const track = trackRef.current;
+      const paddingLeft = parseInt(window.getComputedStyle(track).paddingLeft) || 0;
+      track.scrollTo({
+        left: cards[index].offsetLeft - paddingLeft,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -262,11 +221,7 @@ export default function Section3() {
         <motion.div
           className={styles.track}
           ref={trackRef}
-          style={{ x }}
-          drag="x"
-          dragConstraints={sliderConstraints}
-          dragElastic={0}
-          dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+          onScroll={handleScroll}
         >
           {properties.map((property, i) => (
               <motion.div
