@@ -115,28 +115,29 @@ export default function Section2() {
               className={styles.track}
             >
               {cards.map((card, i) => (
-                <motion.div 
-                  className={styles.card} 
-                  key={card.id}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 1, ease: [0.33, 1, 0.68, 1], delay: 0.1 * i }}
-                >
-                  <Image 
-                    src={card.image} 
-                    alt={card.title}
-                    fill
-                    draggable={false}
-                    sizes="(max-width: 768px) 260px, (max-width: 1024px) 290px, 320px"
-                    className={styles.cardImage}
-                    unoptimized
-                  />
-                  <div className={styles.cardOverlay}>
-                    <h3 className={styles.cardTitle}>{card.title}</h3>
-                    <p className={styles.cardText}>{card.text}</p>
-                  </div>
-                </motion.div>
+                <div className={styles.slide} key={card.id}>
+                  <motion.div 
+                    className={styles.card} 
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 1, ease: [0.33, 1, 0.68, 1], delay: 0.1 * i }}
+                  >
+                    <Image 
+                      src={card.image} 
+                      alt={card.title}
+                      fill
+                      draggable={false}
+                      sizes="(max-width: 768px) 260px, (max-width: 1024px) 290px, 320px"
+                      className={styles.cardImage}
+                      unoptimized
+                    />
+                    <div className={styles.cardOverlay}>
+                      <h3 className={styles.cardTitle}>{card.title}</h3>
+                      <p className={styles.cardText}>{card.text}</p>
+                    </div>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>
