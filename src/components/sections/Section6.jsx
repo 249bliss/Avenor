@@ -149,12 +149,14 @@ export default function Section6() {
                 visible: { opacity: 1, clipPath: 'inset(0% 0 0 0)', transition: { duration: 1.2, ease: [0.33, 1, 0.68, 1] } }
               }}
             >
-              <Image
-                src="/assets/section 6(faq)/image 2.gif"
-                alt="Modern luxury house with car"
-                fill
-                sizes="(max-width: 1024px) 100vw, 400px"
+              <video
+                src="/assets/section 6(faq)/animate_house_for_testi.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className={styles.image}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </motion.div>
           </motion.div>
