@@ -228,13 +228,13 @@
   z-index: 5; /* below top/bottom overlays but above image */
 }
 
-/* ── Navigation (dots + arrows) ── */
+/* ── Navigation (Arrows) ── */
 .navigation {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 32px;
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 .arrowBtn {
@@ -260,27 +260,6 @@
 .arrowBtn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #d0d0d0;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.dotActive {
-  background: var(--color-green);
 }
 
 /* =============================================

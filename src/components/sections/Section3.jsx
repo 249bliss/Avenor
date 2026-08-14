@@ -151,22 +151,30 @@ export default function Section3() {
   });
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
-  // Sync active dot with Embla
+  // Sync state with Embla
   React.useEffect(() => {
     if (!emblaApi) return;
-    const onSelect = () => setActiveIndex(emblaApi.selectedScrollSnap());
+    
+    const onSelect = () => {
+      setActiveIndex(emblaApi.selectedScrollSnap());
+      setPrevBtnDisabled(!emblaApi.canScrollPrev());
+      setNextBtnDisabled(!emblaApi.canScrollNext());
+    };
     
     // Update on select (snap end) and also during scroll for responsive feedback
     emblaApi.on('select', onSelect);
     emblaApi.on('scroll', onSelect);
-    onSelect(); // Trigger immediately to sync initial state
+    
+    // Trigger immediately to sync initial state
+    onSelect();
   }, [emblaApi]);
 
-  // Dot/Arrow navigation
-  const scrollToCard = (index) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  };
+  // Arrow navigation directly via Embla
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
+  const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
   return (
     <section className={styles.section} id="properties">
@@ -222,12 +230,12 @@ export default function Section3() {
         </div>
       </motion.div>
 
-      {/* ── Navigation (Dots & Arrows) ── */}
+      {/* ── Navigation (Arrows Only) ── */}
       <div className={styles.navigation}>
         <button 
           className={styles.arrowBtn}
-          onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
-          disabled={activeIndex === 0}
+          onClick={scrollPrev}
+          disabled={prevBtnDisabled}
           aria-label="Previous property"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -235,21 +243,10 @@ export default function Section3() {
           </svg>
         </button>
 
-        <div className={styles.dots}>
-          {properties.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ''}`}
-              onClick={() => scrollToCard(i)}
-              aria-label={`Go to property ${i + 1}`}
-            />
-          ))}
-        </div>
-
         <button 
           className={styles.arrowBtn}
-          onClick={() => scrollToCard(Math.min(properties.length - 1, activeIndex + 1))}
-          disabled={activeIndex === properties.length - 1}
+          onClick={scrollNext}
+          disabled={nextBtnDisabled}
           aria-label="Next property"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
