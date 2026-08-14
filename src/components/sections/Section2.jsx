@@ -2,45 +2,35 @@
 
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useMotionValue, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useEmblaCarousel from 'embla-carousel-react';
 import styles from './Section2.module.css';
 
 export default function Section2() {
-  const trackRef = useRef(null);
-  const wrapperRef = useRef(null);
-  const [sliderConstraints, setSliderConstraints] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps',
+    dragFree: false,
+  });
 
-  // Calculate drag constraints on mount and resize
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
+
   React.useEffect(() => {
-    const measure = () => {
-      if (trackRef.current && wrapperRef.current) {
-        const trackWidth = trackRef.current.scrollWidth;
-        const wrapperWidth = wrapperRef.current.offsetWidth;
-        setSliderConstraints(Math.min(0, wrapperWidth - trackWidth));
-      }
+    if (!emblaApi) return;
+    
+    const onSelect = () => {
+      setPrevBtnDisabled(!emblaApi.canScrollPrev());
+      setNextBtnDisabled(!emblaApi.canScrollNext());
     };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
+    
+    emblaApi.on('select', onSelect);
+    emblaApi.on('scroll', onSelect);
+    onSelect();
+  }, [emblaApi]);
 
-  const x = useMotionValue(0);
-
-  const scrollBy = (direction) => {
-    if (trackRef.current && wrapperRef.current) {
-      const cards = trackRef.current.querySelectorAll('.' + styles.card);
-      if (cards.length === 0) return;
-      const cardWidth = cards[0].offsetWidth + 16; // 16px is the gap
-      let currentX = x.get();
-      let newX = currentX - (direction * cardWidth);
-      
-      // Enforce bounds
-      if (newX > 0) newX = 0;
-      if (newX < sliderConstraints) newX = sliderConstraints;
-      
-      animate(x, newX, { type: 'spring', stiffness: 200, damping: 20 });
-    }
-  };
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
+  const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
   const cards = [
     { 
@@ -116,19 +106,9 @@ export default function Section2() {
 
         {/* ── Right — Horizontal scroll track ── */}
         <div className={styles.rightCol}>
-          <div className={styles.trackWrapper} ref={wrapperRef}>
-            <motion.div
+          <div className={styles.trackWrapper} ref={emblaRef}>
+            <div
               className={styles.track}
-              ref={trackRef}
-              style={{ x }}
-              drag="x"
-              dragConstraints={{ left: sliderConstraints, right: 0 }}
-              dragElastic={0}
-              dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
             >
               {cards.map((card, i) => (
                 <motion.div 
@@ -154,21 +134,23 @@ export default function Section2() {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* ── Arrows ── */}
           <div className={styles.arrows}>
             <button 
               className={styles.arrowBtn} 
-              onClick={() => scrollBy(-1)}
+              onClick={scrollPrev}
+              disabled={prevBtnDisabled}
               aria-label="Previous"
             >
               ←
             </button>
             <button 
               className={`${styles.arrowBtn} ${styles.arrowBtnActive}`}
-              onClick={() => scrollBy(1)}
+              onClick={scrollNext}
+              disabled={nextBtnDisabled}
               aria-label="Next"
             >
               →

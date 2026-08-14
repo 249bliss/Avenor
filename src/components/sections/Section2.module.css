@@ -83,24 +83,24 @@
 /* Scrollable track */
 .track {
   display: flex;
-  gap: 16px;
-  cursor: grab;
-  /* let last card peek to hint scrollability */
-  padding-right: 48px;
+  touch-action: pan-y;
+  backface-visibility: hidden;
+  /* Embla needs no padding right unless we account for it */
 }
 
-.track:active {
-  cursor: grabbing;
+/* Card spacing - Embla supports gap */
+.track {
+  gap: 16px;
 }
 
 .track::-webkit-scrollbar {
   display: none;
 }
 
-/* ── Card — image fills entirely, text overlaid ── */
 .card {
   position: relative;
   flex: 0 0 calc(50% - 8px);
+  min-width: 0;
   aspect-ratio: 4 / 5;
   border-radius: 14px;
   overflow: hidden;
@@ -174,8 +174,13 @@
   line-height: 1;
 }
 
-.arrowBtn:hover {
+.arrowBtn:hover:not(:disabled) {
   border-color: #1a1a1a;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* Active (right) arrow — filled dark */
@@ -185,7 +190,7 @@
   color: #fff;
 }
 
-.arrowBtnActive:hover {
+.arrowBtnActive:hover:not(:disabled) {
   background-color: #004020;
   border-color: #004020;
 }
@@ -258,7 +263,6 @@
   }
 
   .track {
-    padding-right: 24px;
     gap: 12px;
   }
 
