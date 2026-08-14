@@ -4,14 +4,18 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import styles from './Section2.module.css';
 
 export default function Section2() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    containScroll: 'trimSnaps',
-    dragFree: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: 'start',
+      containScroll: 'trimSnaps',
+      dragFree: false,
+    },
+    [WheelGesturesPlugin()]
+  );
 
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);

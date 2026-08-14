@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import TextReveal from '../ui/TextReveal';
 import styles from './Section3.module.css';
 
@@ -144,11 +145,14 @@ function PropertyCard({ property, index, isActive }) {
 }
 
 export default function Section3() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    containScroll: 'keepSnaps', // Keeps 1:1 ratio between properties and snap points without empty space
-    dragFree: false, // Forces snap scrolling
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: 'start',
+      containScroll: 'keepSnaps', // Keeps 1:1 ratio between properties and snap points without empty space
+      dragFree: false, // Forces snap scrolling
+    },
+    [WheelGesturesPlugin()]
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
