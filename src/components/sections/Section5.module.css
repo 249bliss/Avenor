@@ -228,17 +228,16 @@
   }
   
   .content {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px; /* Reduced gap to pull arrows closer to images */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
   }
 
   /* Restructure layout for tablet */
   .imagesCol {
     flex-direction: row;
-    flex: 1;
-    min-width: 0;
+    flex: 0 0 auto;
+    width: 100%;
     justify-content: flex-start;
     gap: 16px;
     
@@ -269,15 +268,19 @@
     transform: scale(1);
   }
 
-  /* Move controls to sit naturally next to images */
+  /* Move controls to the bottom */
   .controlsCol {
     flex: 0 0 auto;
     flex-direction: row;
+    justify-content: flex-end;
     padding: 0;
+    order: 3; /* Places arrows below quote */
   }
 
   .quoteCol {
-    flex: 0 0 100%;
+    flex: 0 0 auto;
+    width: 100%;
+    order: 2;
   }
   
   .quoteCard {
@@ -318,9 +321,10 @@
   }
 
   .quoteCard {
-    padding: 40px 24px;
-    min-height: 280px;
+    padding: 40px 32px;
+    min-height: auto; /* allow it to grow naturally */
     border-radius: 24px;
+    margin-top: 16px; /* extra breathing room below images */
   }
 
   .quoteIcon {
@@ -335,8 +339,9 @@
   }
 
   .quoteText {
-    font-size: 18px;
+    font-size: 17px;
     max-width: 100%;
+    line-height: 1.6;
   }
 }
 
@@ -356,6 +361,7 @@
   }
 
   .quoteCard {
-    padding: 32px 20px;
+    padding: 32px 24px;
+    margin-top: 8px;
   }
 }

@@ -89,10 +89,28 @@
   }
   
   .heading {
+    /* Slightly smaller on tablets to prevent awkward wraps */
+    font-size: clamp(30px, 5vw, 42px);
     margin-bottom: 16px;
   }
 
   .subheading {
     margin-bottom: 32px;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    /* Scaled specifically so "Extraordinary Places." fits on one line */
+    font-size: clamp(24px, 7.5vw, 28px);
+    max-width: 320px;
+    letter-spacing: -0.01em;
+  }
+
+  .subheading {
+    /* Intentional editorial line length */
+    max-width: 270px;
+    font-size: 15px;
   }
 }

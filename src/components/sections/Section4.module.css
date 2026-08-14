@@ -229,15 +229,20 @@
   }
 
   .statsInner {
-    gap: 16px 32px;
-    flex-wrap: wrap;
+    gap: 16px;
+    flex-wrap: nowrap;
   }
 
   .statValue {
-    font-size: 32px;
+    font-size: 26px;
   }
   
   .statItem {
-    min-width: 90px;
+    min-width: 70px;
+    gap: 4px;
+  }
+  
+  .statLabel {
+    font-size: 13px;
   }
 }
