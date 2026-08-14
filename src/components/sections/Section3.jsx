@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import useEmblaCarousel from 'embla-carousel-react';
 import TextReveal from '../ui/TextReveal';
 import styles from './Section3.module.css';
 
@@ -143,48 +144,25 @@ function PropertyCard({ property, index, isActive }) {
 }
 
 export default function Section3() {
-  const trackRef = useRef(null);
-  const wrapperRef = useRef(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps', // Strict boundaries (no empty space)
+    dragFree: false, // Forces snap scrolling
+  });
+
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // ── Sync active dot during native scroll ────────────────────────
-  const handleScroll = () => {
-    if (!trackRef.current) return;
-    const track = trackRef.current;
-    const scrollLeft = track.scrollLeft;
-    const cards = track.querySelectorAll('[data-card]');
-    const paddingLeft = parseInt(window.getComputedStyle(track).paddingLeft) || 0;
-    
-    let closestIndex = 0;
-    let minDistance = Infinity;
-    
-    cards.forEach((card, index) => {
-      const targetScroll = card.offsetLeft - paddingLeft;
-      const distance = Math.abs(scrollLeft - targetScroll);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = index;
-      }
-    });
+  // Sync active dot with Embla
+  React.useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setActiveIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    onSelect(); // Trigger immediately to sync initial state
+  }, [emblaApi]);
 
-    if (closestIndex !== activeIndex) {
-      setActiveIndex(closestIndex);
-    }
-  };
-
-  // ── Dot navigation ────────────────────────────────
+  // Dot/Arrow navigation
   const scrollToCard = (index) => {
-    setActiveIndex(index);
-    if (!trackRef.current) return;
-    const cards = trackRef.current.querySelectorAll('[data-card]');
-    if (cards[index]) {
-      const track = trackRef.current;
-      const paddingLeft = parseInt(window.getComputedStyle(track).paddingLeft) || 0;
-      track.scrollTo({
-        left: cards[index].offsetLeft - paddingLeft,
-        behavior: 'smooth'
-      });
-    }
+    if (emblaApi) emblaApi.scrollTo(index);
   };
 
   return (
@@ -210,7 +188,7 @@ export default function Section3() {
       {/* ── Card track ── */}
       <motion.div 
         className={styles.trackOuter}
-        ref={wrapperRef}
+        ref={emblaRef}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-40px' }}
@@ -218,10 +196,8 @@ export default function Section3() {
           visible: { transition: { staggerChildren: 0.2, delayChildren: 0.3 } }
         }}
       >
-        <motion.div
+        <div
           className={styles.track}
-          ref={trackRef}
-          onScroll={handleScroll}
         >
           {properties.map((property, i) => (
               <motion.div
@@ -240,7 +216,7 @@ export default function Section3() {
               />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* ── Navigation (Dots & Arrows) ── */}
