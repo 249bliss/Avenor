@@ -238,6 +238,10 @@
     gap: 40px; /* restore stacked gap on tablet */
   }
 
+  .rightCol {
+    width: 100%;
+  }
+
   .slide {
     flex: 0 0 260px;
   }
