@@ -2,7 +2,7 @@
   position: relative;
   width: calc(100% - 48px);
   max-width: 1440px;
-  height: calc(100vh - 48px);
+  height: calc(100svh - 48px);
   min-height: 700px;
   margin: 24px auto;
   border-radius: 32px;
@@ -78,7 +78,8 @@
 @media (max-width: 768px) {
   .hero {
     width: calc(100% - 32px);
-    height: calc(100vh - 32px);
+    height: calc(100svh - 32px);
+    min-height: 540px;
     margin: 16px auto;
     border-radius: 24px;
     padding-bottom: 40px;
@@ -101,6 +102,10 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: 480px;
+  }
+  
   .heading {
     /* Scaled specifically so "Extraordinary Places." fits on one line */
     font-size: clamp(24px, 7.5vw, 28px);
