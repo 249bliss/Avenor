@@ -205,6 +205,11 @@
     flex-direction: column;
   }
 
+  .imageWrapperTop,
+  .imageWrapperBottom {
+    flex: none;
+  }
+
   .imageWrapperTop {
     height: 220px;
   }
